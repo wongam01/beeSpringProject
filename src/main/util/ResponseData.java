@@ -10,7 +10,7 @@ public class ResponseData {
     public static <T> ApiResult<T> success(T data, String msg) {
         return new ApiResult<>(true, msg, data, null);
     }
-    public static ApiResult<?> error(String msg, HttpStatus status) {
+        public static ApiResult<?> error(String msg, HttpStatus status) {
         return new ApiResult<>(false, null, null, new ApiError(status, msg));
     }
     // record == (static)class + Getter + Setter + hashCode + equals + toString

@@ -8,14 +8,13 @@ import org.springframework.web.bind.annotation.*;
 
 public class BoardRestController {
     private final BoardService boardService;
-    private final ResponseData responseData;
 
     // 회원가입 기능 로직
 
     // 로그인 기능 로직
 
 
-    // 전체 게시물 조회 로직
+    // 전체 게시물 로직
     @GetMapping()
     public ResponseData.ApiResult<?> getAllBoard() {
         return ResponseData.success(boardService.getAllBoard()
@@ -28,8 +27,9 @@ public class BoardRestController {
     @PostMapping("/new")
     public ResponseData.ApiResult<?> createBoard(@RequestBody BoardDto dto) {
         if (dto.getUserName() == null) {
-            return ResponseData.error("유저 이름을 입력하지 않았습니다.", HttpStatus.BAD_REQUEST);
+            return ResponseData.error("유저 이름을 입력해주세요", HttpStatus.BAD_REQUEST);
         }
-        Board board = boardService.createBoard();
+        BoardDto boardDto = boardService.createBoard(dto).of();
+        return ResponseData.success(boardDto,"생성되었습니다");
     }
 }
