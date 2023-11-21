@@ -13,8 +13,10 @@ public class BoardService {
 
     private final BoardRepository br; // getter , setter X
 
+
+
     // Board 엔티티 저장 로직 구현
-    public Board createBoard(BoardDto dto) {
+     public Board createBoard(BoardDto dto) {
         return br.save(Board.builder()
                 .id(dto.getId())
                 .userName(dto.getUserName())
@@ -38,8 +40,6 @@ public class BoardService {
 
         return br.findById(id).get();
     }
-
-
 
     public Board updateBoard(Long id, BoardDto boardDto) {
         Optional<Board> optionalBoard = br.findById(id);

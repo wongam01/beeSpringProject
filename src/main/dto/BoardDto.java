@@ -6,7 +6,7 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 
-
+//  게시글을 생성하거나 조회
 public class BoardDto {
     private Long id;
     private String userName;
