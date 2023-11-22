@@ -12,7 +12,7 @@ public class BoardRestController {
 
     // 회원 가입 기능 로직
     @PostMapping("/sign-up")
-    public ResponseData.ApiResult<?> createUser(@RequestBody RegistrationDto registrationDto, int condition) {
+    public ResponseData.ApiResult<?> createUser(@RequestBody RegistrationDto registrationDto) {
         // 핸드폰 번호 미기입 시
         if (registrationDto.getPhone_number() == null) {
             return ResponseData.error("번호를 입력해주세요", HttpStatus.BAD_REQUEST);
@@ -36,6 +36,7 @@ public class BoardRestController {
         return ResponseData.success(responseDto,"회원가입이 완료되었습니다");
     }
 
+
     private MemberResponseDto converToMemberResponseDto(Member member) {
         // member -> MemberResponseDto 로 변환
         return new MemberResponseDto(
@@ -48,6 +49,13 @@ public class BoardRestController {
 
 
     // 로그인 기능 로직
+    // 1. 사용자 인증
+    @PostMapping("/login")
+    public ResponseData.ApiResult<?> login(@RequestBody LoginDto loginDto) {
+
+    }
+
+
 
 
     // 전체 게시물 로직
