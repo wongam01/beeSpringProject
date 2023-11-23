@@ -12,6 +12,8 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(exclude = "writer") //
 
+
+
 public class Board {
     @Id
     @GeneratedValue
@@ -23,6 +25,7 @@ public class Board {
     private String context;
     @ManyToOne
     private Member writer;
+
 
     public BoardDto of() {
         return BoardDto.builder()

@@ -3,9 +3,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.sound.midi.MetaMessage;
 
 @Service
 @Getter
@@ -14,7 +14,7 @@ import javax.sound.midi.MetaMessage;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository mr;
-
+    private final PasswordEncoder passwordEncoder;
     // 회원 정보 저장 로직 구현
     public Member createUser(Member member) {
         return mr.save(member);
@@ -32,7 +32,9 @@ public class MemberService {
     }
     public HttpStatus checkInfo(Member member, LoginDto loginDto) {
         if (member.getUserName().matches(loginDto.getUserName()) && member.getPassword().matches(loginDto.getPassword())) {
-
+            return HttpStatus.OK;
+        }else {
+            return HttpStatus.BAD_REQUEST;
         }
     }
 

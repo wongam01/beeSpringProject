@@ -49,14 +49,8 @@ public class BoardRestController {
 
 
     // 로그인 기능 로직
-    // 1. 사용자 인증
-    @PostMapping("/login")
-    public ResponseData.ApiResult<?> login(@RequestBody LoginDto loginDto) {
-
-    }
-
-
-
+    // password -> 해시 형태
+    // 유효 -> 성공 결과 반환
 
     // 전체 게시물 로직
     @GetMapping()
