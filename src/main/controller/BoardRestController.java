@@ -36,7 +36,6 @@ public class BoardRestController {
         return ResponseData.success(responseDto,"회원가입이 완료되었습니다");
     }
 
-
     private MemberResponseDto converToMemberResponseDto(Member member) {
         // member -> MemberResponseDto 로 변환
         return new MemberResponseDto(
@@ -46,7 +45,6 @@ public class BoardRestController {
                 member.getPhone_number()
         );
     }
-
 
     // 로그인 기능 로직
     // password -> 해시 형태
@@ -69,4 +67,7 @@ public class BoardRestController {
         BoardDto boardDto = boardService.createBoard(dto).of();
         return ResponseData.success(boardDto, "생성되었습니다");
     }
+
+    // 게시물 삭제 로직
+
 }
