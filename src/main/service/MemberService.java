@@ -3,7 +3,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository mr;
-    private final PasswordEncoder passwordEncoder;
     // 회원 정보 저장 로직 구현
     public Member createUser(Member member) {
         return mr.save(member);

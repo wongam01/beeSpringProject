@@ -1,4 +1,3 @@
-import jakarta.persistence.Id;
 import lombok.*;
 
 @Getter
@@ -8,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RegistrationDto {
     // 회원가입 과정
-    @Id
+
     private String name;
     private String password;
     private String userName;
