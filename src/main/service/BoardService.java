@@ -45,8 +45,8 @@ public class BoardService {
         Optional<Board> optionalBoard = br.findById(id);
         Board board = optionalBoard.get();
         board.setUserName(boardDto.getUserName());
-        board.setTitle(board.getTitle());
-        board.setContext(board.getContext());
+        board.setTitle(boardDto.getTitle());
+        board.setContext(boardDto.getContext());
         Board updatedBoard = br.save(board);
         return updatedBoard;
     }
