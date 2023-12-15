@@ -1,6 +1,7 @@
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -108,6 +109,18 @@ public class BoardRestController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시물 조회 중 오류가 발생하였습니다");
         }
+    }
 
+    // 삭제 기능 로직
+    @DeleteMapping("/board/{id}")
+    public ResponseEntity<?> deleteBoard(@PathVariable Long id) {
+        try {
+            boardService.deleteBoard(id);
+            return ResponseEntity.ok().build();
+        } catch (EmptyResultDataAccessException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("삭제 중 오류가 발생하였습습니다");
+        }
     }
 }

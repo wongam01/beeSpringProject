@@ -41,6 +41,7 @@ public class BoardService {
         return br.findById(id).get();
     }
 
+    // 업데이트 기능
     public Board updateBoard(Long id, BoardDto boardDto) {
         Optional<Board> optionalBoard = br.findById(id);
         Board board = optionalBoard.get();
@@ -51,4 +52,8 @@ public class BoardService {
         return updatedBoard;
     }
 
+    // 삭제 기능
+    public void deleteBoard(Long id) {
+        br.deleteById(id);
+    }
 }
