@@ -1,6 +1,8 @@
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -30,6 +32,14 @@ public class BoardService {
     public List<Board> getAllBoard() {
         return br.findAll();
     }
+
+    // 페이지 정렬 기능
+    @Transactional(readOnly = true)
+    public Page<Board> getAllBoard(Pageable pageable) {
+        return br.findAll(pageable);
+    }
+
+
 
     // id 별 조회 기능 로직 구현
     // 1. Id 를 통해 update 할 객체를 찾음

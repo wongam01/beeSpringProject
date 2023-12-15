@@ -1,7 +1,10 @@
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -66,7 +69,7 @@ public class BoardRestController {
 
     }
 
-    // 전체 게시물 로직
+    // 전체 게시물 조회 로직
     @GetMapping()
     public ResponseData.ApiResult<?> getAllBoard() {
         return ResponseData.success(boardService.getAllBoard()
@@ -74,9 +77,17 @@ public class BoardRestController {
                 .toList(), "게시글 조회");
     }
 
+    // 정렬 후 전체 게시물 조회 로직
+    @GetMapping("/boards")
+    public ResponseEntity<?> getAllBoardsWithPaging(Pageable pageable) {
+        Page<Board> page = boardService.getAllBoard(pageable);
+        return ResponseEntity.ok(page);
+    }
+
     // 게시판 생성 로직
     @PostMapping("/new")
     public ResponseData.ApiResult<?> createBoard(@RequestBody BoardDto dto) {
+
         if (dto.getUserName() == null) {
             return ResponseData.error("유저 이름을 입력해주세요", HttpStatus.BAD_REQUEST);
         }
