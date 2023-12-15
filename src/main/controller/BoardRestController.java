@@ -1,19 +1,19 @@
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
 @RequiredArgsConstructor
 @RequestMapping("/board/service")
 @Slf4j
-
+@RestController
 public class BoardRestController {
     private final BoardService boardService;
     private final MemberService memberService;
-
-    // 회원 가입 기능 로직
-    @PostMapping("/sign-up")
+// 회원 가입 기능 로직
+    @PostMapping("/signup")
     public ResponseData.ApiResult<?> createUser(@RequestBody RegistrationDto registrationDto) {
         // 핸드폰 번호 미기입 시
         if (registrationDto.getPhone_number() == null) {
@@ -51,6 +51,16 @@ public class BoardRestController {
     // 로그인 기능 로직
     // password -> 해시 형태
     // 유효 -> 성공 결과 반환
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
+        Member member = memberService.login(loginDto.getUserName(), loginDto.getPassword());
+        if (member != null) {
+            return ResponseEntity.ok(member);
+        } else {
+            return ResponseEntity.badRequest().body("로그인 실패 : 사용자 이름 또는 비밀번호가 잘못되었습니다");
+        }
+
+    }
 
     // 전체 게시물 로직
     @GetMapping()

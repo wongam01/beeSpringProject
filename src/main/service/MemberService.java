@@ -5,6 +5,8 @@ import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 @Service
 @Getter
@@ -35,6 +37,25 @@ public class MemberService {
             return HttpStatus.BAD_REQUEST;
         }
     }
+
+    public Member login(String userName, String password) {
+        Member member = findMemberByUserName(userName);
+        if (member != null && member.getPassword().equals(password)) {
+            return member; // 로그인 성공
+        }
+        return null; // 로그인 실패
+    }
+
+    private Member findMemberByUserName(String userName) {
+        Optional<Member> memberOptional = mr.findByUserName(userName);
+        if (memberOptional.isPresent()) {
+            return memberOptional.get();
+        } else {
+            return null;
+        }
+
+    }
+
 
 
 }
