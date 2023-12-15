@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
@@ -120,6 +121,12 @@ public class BoardRestController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시물 조회 중 오류가 발생하였습니다");
         }
+    }
+
+    // 게시물 검색 기능 로직
+    public ResponseEntity<?> searchBoards(@RequestParam String keyword) {
+        List<Board> boards = boardService.searchBoard(keyword);
+        return ResponseEntity.ok(boards);
     }
 
     // 삭제 기능 로직

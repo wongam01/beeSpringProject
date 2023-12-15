@@ -66,4 +66,9 @@ public class BoardService {
     public void deleteBoard(Long id) {
         br.deleteById(id);
     }
+
+    // 검색 기능 추가
+    public List<Board> searchBoard(String keyword) {
+        return br.findByTitleContainingOrContentContaining(keyword);
+    }
 }
