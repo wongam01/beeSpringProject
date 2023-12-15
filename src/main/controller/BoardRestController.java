@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.NoSuchElementException;
+
 @RequiredArgsConstructor
 @RequestMapping("/board/service")
 @Slf4j
@@ -12,7 +14,8 @@ import org.springframework.web.bind.annotation.*;
 public class BoardRestController {
     private final BoardService boardService;
     private final MemberService memberService;
-// 회원 가입 기능 로직
+
+    // 회원 가입 기능 로직
     @PostMapping("/signup")
     public ResponseData.ApiResult<?> createUser(@RequestBody RegistrationDto registrationDto) {
         // 핸드폰 번호 미기입 시
@@ -35,7 +38,7 @@ public class BoardRestController {
 
         // 저장된 Member 엔티티를 MemberResponseDto로 변환
         MemberResponseDto responseDto = converToMemberResponseDto(savedMember);
-        return ResponseData.success(responseDto,"회원가입이 완료되었습니다");
+        return ResponseData.success(responseDto, "회원가입이 완료되었습니다");
     }
 
     private MemberResponseDto converToMemberResponseDto(Member member) {
@@ -80,6 +83,18 @@ public class BoardRestController {
         return ResponseData.success(boardDto, "생성되었습니다");
     }
 
-    // 게시물 삭제 로직
+    // 게시물 업데이트 로직
+    @PutMapping("/boards/{id}")
+    public ResponseEntity<?> updateBoard(@PathVariable Long id, @RequestBody BoardDto boardDto) {
+        try {
+            Board updatedBoard = boardService.updateBoard(id, boardDto);
+            return ResponseEntity.ok(updatedBoard);
+            // 대상 게시물이 존재하지 않음
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) { // 기타 모든 종류의 예외가 발생
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("업데이트 중 오류가 발생하였습니다");
+        }
+    }
 
 }
