@@ -97,4 +97,17 @@ public class BoardRestController {
         }
     }
 
+    // id 별 조회 기능 로직
+    @GetMapping("/boards/{id}")
+    public ResponseEntity<?> getBoarsById(@PathVariable Long id) {
+        try {
+            Board boardById = boardService.getBoardById(id);
+            return ResponseEntity.ok(boardById);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시물 조회 중 오류가 발생하였습니다");
+        }
+
+    }
 }
